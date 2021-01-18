@@ -8,7 +8,8 @@ Use
 
 ### Build
 
-Put GeoIP files to `var/data/`. Supported files: MaxMind (free and paid), SypexGeo (see https://github.com/gupalo/geoip)
+Put GeoIP files to `var/data/`.<br>
+Supported files: MaxMind (free and paid), SypexGeo. Full list: https://github.com/gupalo/geoip
 
     make build
     make run
