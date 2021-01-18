@@ -1,14 +1,14 @@
 GeoIP Server
 ============
 
-Provides IP data.
+Provides location data by IP.
 
 Use
 ===
 
 ### Build
 
-Put GeoIP files to `var/data/`.
+Put GeoIP files to `var/data/`. Supported files: MaxMind (free and paid), SypexGeo (see https://github.com/gupalo/geoip)
 
     make build
     make run
