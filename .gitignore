@@ -1,0 +1,8 @@
+.idea/
+/.env.local
+/.env.local.php
+/.env.*.local
+/var/
+/vendor/
+/phpunit.xml
+.phpunit.result.cache

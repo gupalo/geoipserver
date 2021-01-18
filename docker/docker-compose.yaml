@@ -1,0 +1,14 @@
+version: "3"
+networks: {default: {driver: 'bridge'}}
+services:
+    geoipserver:
+        container_name: 'geoipserver'
+        image: 'gupalo/geoipserver'
+        build: {context: '../', dockerfile: 'docker/Dockerfile'}
+        volumes:
+            - '../src/:/code/src/'
+            - '../var/data/:/code/var/data/'
+        environment:
+            APP_ENV: 'dev'
+            API_KEYS: '2398l32khj23,ds87s783h3jsic' # CHANGE ME
+        ports: ['127.0.0.1:8000:80/tcp']
