@@ -9,16 +9,16 @@ use App\Security\Authenticator;
 use Workerman\Protocols\Http\Request;
 use Workerman\Protocols\Http\Response;
 
-class ApiGeoipResponseFactory implements ResponseFactoryInterface
+class ApiGeoIpResponseFactory implements ResponseFactoryInterface
 {
     public function __construct(
         private ?Authenticator $authenticator = null,
-        private ?GeoIpResponseHelper $geoipResponseHelper = null,
+        private ?GeoIpResponseHelper $geoIpResponseHelper = null,
         private ?ArrayHelper $arrayHelper = null,
         private ?JsonHelper $jsonHelper = null,
     ) {
         $this->authenticator ??= new Authenticator();
-        $this->geoipResponseHelper ??= new GeoIpResponseHelper();
+        $this->geoIpResponseHelper ??= new GeoIpResponseHelper();
         $this->arrayHelper ??= new ArrayHelper();
         $this->jsonHelper ??= new JsonHelper();
     }
@@ -32,6 +32,6 @@ class ApiGeoipResponseFactory implements ResponseFactoryInterface
         $isFull = (bool)$request->get('full', false);
         $ips = $this->arrayHelper->toUniqArray($request->get('ips', $request->post('ips', '')));
 
-        return $this->geoipResponseHelper->createResponse($ips, $isFull);
+        return $this->geoIpResponseHelper->createResponse($ips, $isFull);
     }
 }

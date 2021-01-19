@@ -2,29 +2,27 @@
 
 namespace App\Response;
 
-use App\Helper\ArrayHelper;
+use App\Request\RealIpExtractor;
 use App\Response\Helper\GeoIpResponseHelper;
-use App\Server\Server;
 use Workerman\Protocols\Http\Request;
 use Workerman\Protocols\Http\Response;
 
 class MyIpJsonResponseFactory implements ResponseFactoryInterface
 {
     public function __construct(
-        private ?GeoIpResponseHelper $geoipResponseHelper = null,
-        private ?ArrayHelper $arrayHelper = null,
+        private ?GeoIpResponseHelper $geoIpResponseHelper = null,
+        private ?RealIpExtractor $realIpExtractor = null,
     ) {
-        $this->geoipResponseHelper ??= new GeoIpResponseHelper();
-        $this->arrayHelper ??= new ArrayHelper();
+        $this->geoIpResponseHelper ??= new GeoIpResponseHelper();
+        $this->realIpExtractor ??= new RealIpExtractor();
     }
 
     public function create(Request $request): Response
     {
         $isFull = (bool)$request->get('full', false);
 
-        $ips = $this->arrayHelper->toUniqArray($request->header('CF-Connecting-IP', $request->header('X-Real-IP', $request->header('X-Forwarded-For', Server::$ip))));
-        $ips = array_slice($ips, 0, 1);
+        $ips = array_slice($this->realIpExtractor->getRealIps($request), 0, 1);
 
-        return $this->geoipResponseHelper->createResponse($ips, $isFull);
+        return $this->geoIpResponseHelper->createResponse($ips, $isFull);
     }
 }
