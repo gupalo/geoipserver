@@ -40,6 +40,7 @@ class RouterTest extends TestCase
         $router = new Router($this->apiGeoipResponseFactory->reveal());
 
         self::assertSame($response, $router->createResponse($request));
+        self::assertSame('*', $response->getHeader('Access-Control-Allow-Origin'));
     }
 
     public function testNotFound(): void

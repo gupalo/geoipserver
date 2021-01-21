@@ -34,7 +34,7 @@ class Router
 
     public function createResponse(Request $request): Response
     {
-        return match ($request->path()) {
+        $result = match ($request->path()) {
             '/api/geoip' => $this->apiGeoIpResponseFactory->create($request),
             '/myip' => $this->myIpResponseFactory->create($request),
             '/myip/json' => $this->myIpJsonResponseFactory->create($request),
@@ -43,5 +43,9 @@ class Router
             '/robots.txt' => $this->robotsTxtReponseFactory->create($request),
             default => $this->notFoundResponseFactory->create($request),
         };
+
+        $result->header('Access-Control-Allow-Origin', '*');
+
+        return $result;
     }
 }
